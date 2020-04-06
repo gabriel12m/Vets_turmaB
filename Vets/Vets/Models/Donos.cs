@@ -16,7 +16,7 @@ namespace Vets.Models
 
         public string Nome { get; set; }
 
-        public int NIF { get; set; }
+        public string NIF { get; set; }
 
 
         //lista de Animais a que o Dono está associado
