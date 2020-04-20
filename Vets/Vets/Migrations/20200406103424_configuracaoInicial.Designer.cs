@@ -10,7 +10,7 @@ using Vets.Data;
 namespace Vets.Migrations
 {
     [DbContext(typeof(VetsDB))]
-    [Migration("20200406101012_configuracaoInicial")]
+    [Migration("20200406103424_configuracaoInicial")]
     partial class configuracaoInicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,10 +60,10 @@ namespace Vets.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AnimalFk")
+                    b.Property<int>("AnimalFK")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Observacoes")
@@ -74,7 +74,7 @@ namespace Vets.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("AnimalFk");
+                    b.HasIndex("AnimalFK");
 
                     b.HasIndex("VeterinarioFK");
 
@@ -88,8 +88,8 @@ namespace Vets.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("NIF")
-                        .HasColumnType("int");
+                    b.Property<string>("NIF")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
                         .HasColumnType("nvarchar(max)");
@@ -123,7 +123,7 @@ namespace Vets.Migrations
             modelBuilder.Entity("Vets.Models.Animais", b =>
                 {
                     b.HasOne("Vets.Models.Donos", "Dono")
-                        .WithMany("ListaAnimais")
+                        .WithMany("Animais")
                         .HasForeignKey("DonoFK")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -133,7 +133,7 @@ namespace Vets.Migrations
                 {
                     b.HasOne("Vets.Models.Animais", "Animal")
                         .WithMany("ListaConsultas")
-                        .HasForeignKey("AnimalFk")
+                        .HasForeignKey("AnimalFK")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

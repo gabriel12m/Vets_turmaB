@@ -14,7 +14,7 @@ namespace Vets.Migrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(nullable: true),
-                    NIF = table.Column<int>(nullable: false)
+                    NIF = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -66,17 +66,17 @@ namespace Vets.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(nullable: false),
+                    Data = table.Column<DateTime>(nullable: false),
                     Observacoes = table.Column<string>(nullable: true),
-                    AnimalFk = table.Column<int>(nullable: false),
+                    AnimalFK = table.Column<int>(nullable: false),
                     VeterinarioFK = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Consultas", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Consultas_Animais_AnimalFk",
-                        column: x => x.AnimalFk,
+                        name: "FK_Consultas_Animais_AnimalFK",
+                        column: x => x.AnimalFK,
                         principalTable: "Animais",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -94,9 +94,9 @@ namespace Vets.Migrations
                 column: "DonoFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Consultas_AnimalFk",
+                name: "IX_Consultas_AnimalFK",
                 table: "Consultas",
-                column: "AnimalFk");
+                column: "AnimalFK");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Consultas_VeterinarioFK",
