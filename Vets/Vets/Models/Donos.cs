@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,6 +32,15 @@ namespace Vets.Models
         [RegularExpression("[A-ZÓÂÍ][a-zçáéíóúàèìòùãõäëïöüâêîôûñ]+(( | d[ao](s)? | e |-|'| d')[A-ZÓÂÍ][a-zçáéíóúàèìòùãõäëïöüâêîôûñ]+){1,3}",
                             ErrorMessage = "Deve escrever entre 2 e 4 nomes, começados por uma Maiúscula, seguidos de minúsculas.")]
         public string Nome { get; set; }
+
+        /// <summary>
+        /// Identifica o sexo do 'Dono'
+        /// </summary>
+        [RegularExpression("[FMfm]", ErrorMessage = "Deve escrever M ou F, no campo{0}!")]
+        [StringLength(1, MinimumLength = 1)]
+        [NotMapped]
+        public string Sexo { get; set; }
+
 
         /// <summary>
         /// Número de Identificação Fiscal, vulgo "nº de contribuinte"
