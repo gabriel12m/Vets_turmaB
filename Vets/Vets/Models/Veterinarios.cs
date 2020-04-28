@@ -25,6 +25,12 @@ namespace Vets.Models
 
         public string Nome { get; set; }
 
+        /// <summary>
+        /// Número de Cédula Profissional
+        /// </summary>
+        [RegularExpression("vet-[0-9]{5}")] // "vet-34589"
+        [StringLength(9)]
+        [Display(Name = "Nº Cédula Profissional")]
         public string NumCedulaProf { get; set; }
 
         public string Fotografia { get; set; }
@@ -32,7 +38,7 @@ namespace Vets.Models
         /// <summary>
         /// lista das Consulta a q um Veterinário está 
         /// </summary>
-        public ICollection<Consultas> Consultas { get; set; }
+        public virtual ICollection<Consultas> Consultas { get; set; }
 
     }
 }

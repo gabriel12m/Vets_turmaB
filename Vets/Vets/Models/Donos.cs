@@ -53,6 +53,6 @@ namespace Vets.Models
         /// <summary>
         /// lista de Animais de um determinado dono
         /// </summary>
-        public ICollection<Animais> Animais { get; set; }
+        public virtual ICollection<Animais> Animais { get; set; }
     }
 }
