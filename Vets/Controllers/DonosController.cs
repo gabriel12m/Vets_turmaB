@@ -21,12 +21,15 @@ namespace Vets.Controllers
 
 
 
-
         // GET: Donos
+        /// <summary>
+        /// Invoca a View Index
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
-            //em SQL, db.Donos.ToListAsync() significa:
-            //SELECT * FROM Donos
+            // em SQL, db.Donos.ToListAsync() significa:
+            // SELECT * FROM Donos
 
             return View(await db.Donos.ToListAsync());
         }
@@ -34,41 +37,50 @@ namespace Vets.Controllers
 
 
 
-
         // GET: Donos/Details/5
+        /// <summary>
+        /// Mostra os detalhes de um Dono
+        /// </summary>
+        /// <param name="id">identificador do Dono a detalhar</param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                // não foi fornecido o ID
+                // pq o utilizador o eliminou propositadamente
+                // por isso, redireciono o utilizador para a página de Index
+                return RedirectToAction("Index");
             }
 
-            //em SQL, db.Donos.FirstOrDefaultAsync(m => m.ID == id) significa
-            //SELECT * FROM Donos d WHERE d.ID = id
+            // em SQL, db.Donos.FirstOrDefaultAsync(m => m.ID == id) significa
+            // SELECT * FROM Donos d WHERE d.ID = id
             var dono = await db.Donos.FirstOrDefaultAsync(d => d.ID == id);
 
 
-            /// d => d.ID == id   -> expressão Lambda
-            /// ^
-            /// |
-            /// 'variável' que identifica cada um dos registos da tabela Donos
-            /// esta 'variavel' chama-se 'd' porque dessa forma associa-se mais facilmente aos Donos
-            /// 
-            ///   ^
-            ///   |
-            ///   => - simples separador
-            ///   
+            ///  d => d.ID == id   -> expressão Labda
+            ///  ^
+            ///  |
+            ///  'variável' que identifica cada um dos registos da tabela Donos
+            ///  esta 'variável' chama-se 'd' pq dessa forma associa-se mais facilmente aos Donos
+            ///  
+            ///    ^
+            ///    |
+            ///    => - simples separador
+            ///    
             ///       ^
             ///       |
-            ///       d - identifica o registo que está a ser processado
+            ///       d - identifica o registo q está a ser processado
             ///       d.ID - identifica o atributo 'ID', desse registo
-            ///       d.ID == id - expressão lógica, devolve 'true' ou 'false'
-
+            ///       d.ID == id -> expressão lógica, devolvendo 'true' ou 'false'
 
 
             if (dono == null)
             {
-                return NotFound();
+                // o ID fornecido não corresponde a um Dono válido
+                // pq o utilizador o alterou propositadamente
+                // por isso, redireciono o utilizador para a página de Index
+                return RedirectToAction("Index");
             }
 
             return View(dono);
@@ -80,22 +92,26 @@ namespace Vets.Controllers
             return View();
         }
 
+
+
         // POST: Donos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Nome,NIF")] Donos dono)
+        public async Task<IActionResult> Create(Donos dono)
         {
+            // public IActionResult Index(string visor, string bt, string primeiroOperando, string operador, string limpaVisor) {  -> na 'Calculadora'
+
             if (ModelState.IsValid)
             {
                 db.Add(dono);
-                await db.SaveChangesAsync(); //commit
+                await db.SaveChangesAsync(); // commit
                 return RedirectToAction(nameof(Index));
             }
 
-            //alguma coisa correu mal.
-            //devolve-se o controlo da aplicação à View
+            // alguma coisa correu mal.
+            // devolve-se o controlo da aplicação à View
             return View(dono);
         }
 
@@ -107,25 +123,26 @@ namespace Vets.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
 
-            var donos = await db.Donos.FindAsync(id);
-            if (donos == null)
+            var dono = await db.Donos.FindAsync(id);
+            if (dono == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
-            return View(donos);
+            return View(dono);
         }
+
 
         // POST: Donos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Nome,NIF")] Donos donos)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Nome,NIF")] Donos dono)
         {
-            if (id != donos.ID)
+            if (id != dono.ID)
             {
                 return NotFound();
             }
@@ -134,12 +151,12 @@ namespace Vets.Controllers
             {
                 try
                 {
-                    db.Update(donos);
+                    db.Update(dono);
                     await db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DonosExists(donos.ID))
+                    if (!DonosExists(dono.ID))
                     {
                         return NotFound();
                     }
@@ -150,37 +167,43 @@ namespace Vets.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(donos);
+            return View(dono);
         }
+
+
 
         // GET: Donos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
 
-            var donos = await db.Donos
+            var dono = await db.Donos
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (donos == null)
+            if (dono == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
 
-            return View(donos);
+            return View(dono);
         }
+
+
 
         // POST: Donos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var donos = await db.Donos.FindAsync(id);
-            db.Donos.Remove(donos);
+            var dono = await db.Donos.FindAsync(id);
+            db.Donos.Remove(dono);
             await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+
 
         private bool DonosExists(int id)
         {

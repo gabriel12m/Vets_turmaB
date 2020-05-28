@@ -9,6 +9,7 @@ namespace Vets.Models
 {
     public class Consultas
     {
+
         [Key]
         public int ID { get; set; }
 
@@ -17,14 +18,15 @@ namespace Vets.Models
         public string Observacoes { get; set; }
 
 
-        //FK para Animais
+        // FK para Animais
         [ForeignKey(nameof(Animal))]
-        public int AnimalFK { get; set; }   //Consulta ---> Animal
-        public Animais Animal { get; set; }
+        public int AnimalFK { get; set; }   // Consulta ---> Animal
+        public  virtual Animais Animal { get; set; }
 
-        //FK para Veterinários
+        // FK para Veterinários
         [ForeignKey(nameof(Veterinario))]
-        public int VeterinarioFK { get; set; }  //Consulta ---> Veterinário
-        public Veterinarios Veterinario { get; set; }
+        public int VeterinarioFK { get; set; }  // Consulta ---> Veterinário
+        public virtual Veterinarios Veterinario { get; set; }
+
     }
 }

@@ -1,16 +1,18 @@
-﻿@model Vets.Models.Veterinarios
+﻿@model Veterinarios
 
 @{
-    ViewData["Title"] = "Adição de Veterinário";
+   Layout = "_Layout2"; // idicar que esta página irá usar um Layout diferente
+   ViewData["Title"] = "Adição de Veterinários";
 }
 
 <h1>Adição de Veterinário</h1>
 
-
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data">
+
+        <form asp-action="Create" enctype="multipart/form-data" method="post">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Nome" class="control-label"></label>
@@ -24,8 +26,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="Fotografia" class="control-label"></label>
-                @*@<input asp-for="Fotografia" class="form-control" />*@
-                <input type="file" name="fotoVet" accept=".jpg,.png" style="color:blue;"/>
+                @*<input asp-for="Fotografia" class="form-control" />*@
+               <input type="file" name="fotoVet" accept=".jpg,.png" style="color:blue;" />
                 <span asp-validation-for="Fotografia" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -36,7 +38,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Regressar à Lista</a>
 </div>
 
 @section Scripts {
